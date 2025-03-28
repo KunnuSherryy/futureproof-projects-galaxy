@@ -3,62 +3,10 @@ import React from 'react';
 import { AnimatedText } from '@/components/ui/animated-text';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
-import { Trophy, Award, Code, Users } from 'lucide-react';
+import { achievementStats, hackathons, certifications, professionalLinks } from '@/data/achievements';
+import { Trophy, Award } from 'lucide-react';
 
 const AchievementsSection = () => {
-  const achievementStats = [
-    { icon: Trophy, value: 21, label: 'Hackathons & Competitions', description: 'Participated In' },
-    { icon: Award, value: 6, label: 'Top 10 Finishes', description: 'In Various Competitions' },
-    { icon: Code, value: 200, label: 'LeetCode Problems', description: 'Successfully Solved' },
-    { icon: Users, value: 1550, label: 'LeetCode Rating', description: 'Top 32% Worldwide' },
-  ];
-
-  const hackathons = [
-    {
-      name: 'Hack\'24',
-      organizer: 'Indraprastha Institute of Information Technology Delhi',
-      achievement: 'Top 5',
-    },
-    {
-      name: 'BuildWars',
-      organizer: 'Maharaja Agrasen Institute of Technology Delhi',
-      achievement: 'Top 6',
-    },
-    {
-      name: 'Smart Delhi Ideathon',
-      organizer: 'Vigyan Bhawan',
-      achievement: 'Top 30',
-    },
-    {
-      name: 'GDSC Ideathon',
-      organizer: 'Bhagwan Parshuram Institute of Technology',
-      achievement: 'Top 10',
-    },
-    {
-      name: 'GeekRooms',
-      organizer: 'JIMS',
-      achievement: 'Participated',
-    },
-    {
-      name: 'HackHazards',
-      organizer: 'Regional Tech Event',
-      achievement: 'Participated',
-    },
-  ];
-
-  const certifications = [
-    {
-      name: 'HackerRank: 4-star Java Certification',
-      issuer: 'HackerRank',
-      date: '2023',
-    },
-    {
-      name: 'LeetCode: Top 32% (1550+ rating)',
-      issuer: 'LeetCode',
-      date: '2024',
-    },
-  ];
-
   return (
     <section id="achievements" className="py-20 bg-theme-dark">
       <div className="container mx-auto px-4 md:px-6">
@@ -120,11 +68,14 @@ const AchievementsSection = () => {
             <div className="glass-card p-6">
               <h3 className="text-xl font-semibold mb-6 text-gradient">Professional Links</h3>
               <div className="space-y-4">
-                <LinkCard name="LinkedIn" url="https://linkedin.com/in/kunalsharma" index={0} />
-                <LinkCard name="GitHub (Team)" url="https://github.com/team-link" index={1} />
-                <LinkCard name="GitHub (Individual)" url="https://github.com/kunalsharma" index={2} />
-                <LinkCard name="LeetCode" url="https://leetcode.com/kunalsharma" index={3} />
-                <LinkCard name="HackerRank" url="https://hackerrank.com/kunalsharma" index={4} />
+                {professionalLinks.map((link, index) => (
+                  <LinkCard 
+                    key={index}
+                    name={link.name} 
+                    url={link.url} 
+                    index={index} 
+                  />
+                ))}
               </div>
             </div>
           </div>

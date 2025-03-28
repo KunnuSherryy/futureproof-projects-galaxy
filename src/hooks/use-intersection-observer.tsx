@@ -6,18 +6,24 @@ interface IntersectionObserverOptions {
   rootMargin?: string;
   threshold?: number | number[];
   once?: boolean;
+  triggerOnce?: boolean;
 }
 
 interface IntersectionObserverEntry {
   isIntersecting: boolean;
   target: Element;
+  intersectionRatio: number;
+  boundingClientRect: DOMRectReadOnly;
+  intersectionRect: DOMRectReadOnly;
+  rootBounds: DOMRectReadOnly | null;
+  time: number;
 }
 
 export function useIntersectionObserver(
   ref: RefObject<Element>,
   options: IntersectionObserverOptions = {}
 ): IntersectionObserverEntry | null {
-  const { once = false, ...observerOptions } = options;
+  const { once = false, triggerOnce = false, ...observerOptions } = options;
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
   const observer = useRef<IntersectionObserver | null>(null);
   const hasIntersected = useRef(false);
@@ -26,16 +32,13 @@ export function useIntersectionObserver(
     if (ref.current && !observer.current) {
       observer.current = new IntersectionObserver(([newEntry]) => {
         // If element has already intersected and once option is true, don't update state
-        if (hasIntersected.current && once) return;
+        if (hasIntersected.current && (once || triggerOnce)) return;
         
-        if (newEntry.isIntersecting && once) {
+        if (newEntry.isIntersecting && (once || triggerOnce)) {
           hasIntersected.current = true;
         }
         
-        setEntry({
-          isIntersecting: newEntry.isIntersecting,
-          target: newEntry.target
-        });
+        setEntry(newEntry);
       }, observerOptions);
 
       observer.current.observe(ref.current);
@@ -47,7 +50,7 @@ export function useIntersectionObserver(
         observer.current = null;
       }
     };
-  }, [ref, once, observerOptions]);
+  }, [ref, once, triggerOnce, observerOptions]);
 
   return entry;
 }

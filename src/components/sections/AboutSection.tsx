@@ -2,6 +2,7 @@
 import React from 'react';
 import { AnimatedText } from '@/components/ui/animated-text';
 import { Download, Mail, Laptop, Brain, GraduationCap, Award } from 'lucide-react';
+import { educationData, experienceData, positionsData, professionalSummary } from '@/data/about';
 
 const AboutSection = () => {
   return (
@@ -33,19 +34,17 @@ const AboutSection = () => {
               <h3 className="text-xl font-semibold">Education</h3>
             </div>
             <div className="space-y-4">
-              <div>
-                <h4 className="font-medium">B.Tech in Computer Science & Engineering</h4>
-                <p className="text-theme-text-muted">Guru Gobind Singh Indraprastha University (2023 - 2027)</p>
-                <p className="text-sm text-theme-accent">Current CGPA: 9.00</p>
-              </div>
-              <div>
-                <h4 className="font-medium">Class XII (CBSE)</h4>
-                <p className="text-theme-text-muted">93.2% - Demonstrated consistent academic excellence</p>
-              </div>
-              <div>
-                <h4 className="font-medium">Class X (CBSE)</h4>
-                <p className="text-theme-text-muted">92.8% - Strong foundational academic performance</p>
-              </div>
+              {educationData.map((education, index) => (
+                <div key={index}>
+                  <h4 className="font-medium">{education.degree}</h4>
+                  {education.institution && (
+                    <p className="text-theme-text-muted">{education.institution} ({education.period})</p>
+                  )}
+                  {education.gpa && (
+                    <p className="text-sm text-theme-accent">Current CGPA: {education.gpa}</p>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
 
@@ -56,32 +55,20 @@ const AboutSection = () => {
               </div>
               <h3 className="text-xl font-semibold">Experience</h3>
             </div>
-            <div>
-              <h4 className="font-medium">Software Developer Intern</h4>
-              <p className="text-theme-text-muted">Oasis Infobyte (June - July 2024)</p>
-              <ul className="mt-2 space-y-2 text-theme-text-muted">
-                <li className="flex">
-                  <span className="text-theme-accent mr-2">•</span>
-                  <span>Designed and developed a Pizza Delivery System</span>
-                </li>
-                <li className="flex">
-                  <span className="text-theme-accent mr-2">•</span>
-                  <span>Implemented backend infrastructure using Node.js and Express</span>
-                </li>
-                <li className="flex">
-                  <span className="text-theme-accent mr-2">•</span>
-                  <span>Developed secure JWT authentication mechanism</span>
-                </li>
-                <li className="flex">
-                  <span className="text-theme-accent mr-2">•</span>
-                  <span>Created real-time order tracking functionality</span>
-                </li>
-                <li className="flex">
-                  <span className="text-theme-accent mr-2">•</span>
-                  <span>Optimized database queries for enhanced performance</span>
-                </li>
-              </ul>
-            </div>
+            {experienceData.map((experience, index) => (
+              <div key={index}>
+                <h4 className="font-medium">{experience.position}</h4>
+                <p className="text-theme-text-muted">{experience.company} ({experience.period})</p>
+                <ul className="mt-2 space-y-2 text-theme-text-muted">
+                  {experience.responsibilities.map((responsibility, respIndex) => (
+                    <li key={respIndex} className="flex">
+                      <span className="text-theme-accent mr-2">•</span>
+                      <span>{responsibility}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
 
           <div className="glass-card p-6 transform transition-transform duration-500 hover:scale-[1.02]">
@@ -91,11 +78,8 @@ const AboutSection = () => {
               </div>
               <h3 className="text-xl font-semibold">Professional Summary</h3>
             </div>
-            <p className="text-theme-text-muted mb-4">
-              A dynamic and innovative Computer Science student with a passion for technology and problem-solving. Combining strong academic performance with practical skills in software development, web technologies, and machine learning.
-            </p>
             <p className="text-theme-text-muted">
-              Proven ability to develop complex projects, participate in hackathons, and continuously expand technical expertise across multiple domains.
+              {professionalSummary}
             </p>
           </div>
 
@@ -107,16 +91,13 @@ const AboutSection = () => {
               <h3 className="text-xl font-semibold">Positions & Responsibilities</h3>
             </div>
             <div className="space-y-4">
-              <div>
-                <h4 className="font-medium">Human Resource Representative</h4>
-                <p className="text-theme-text-muted">Teaddle Media (2024 - Present)</p>
-                <p className="text-sm text-theme-text-muted">Manage internal human resource initiatives and support team recruitment.</p>
-              </div>
-              <div>
-                <h4 className="font-medium">Tech & Design Member</h4>
-                <p className="text-theme-text-muted">Namespace Community, BPIT (2023 - 2024)</p>
-                <p className="text-sm text-theme-text-muted">Contributed to community technology and design projects.</p>
-              </div>
+              {positionsData.map((position, index) => (
+                <div key={index}>
+                  <h4 className="font-medium">{position.title}</h4>
+                  <p className="text-theme-text-muted">{position.organization} ({position.period})</p>
+                  <p className="text-sm text-theme-text-muted">{position.description}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
